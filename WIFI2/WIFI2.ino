@@ -3,27 +3,38 @@
 #include <RF24.h>
 #include <RF24Network.h>
 #include <SPI.h>
-#include <Servo.h>
 
 RF24 radio(10, 9);               // nRF24L01 (CE,CSN)
 RF24Network network(radio);      // Include the radio in the network
-const uint16_t this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
+  
+const int this_node = 01;   // Address of our node in Octal format ( 04,031, etc)
+const int node00 = 00;     
+bool zustand_1 = false;
+bool zustand_2 = false;
+bool zustand_3 = false;
+bool zustand_4 = false;
+bool zustand_5 = false;
 
-Servo myservo;  // create servo object to control a servo
 
-void setup() {
+void setup() 
+{
+
   SPI.begin();
   radio.begin();
   network.begin(90, this_node); //(channel, node address)
-  myservo.attach(3);   // (servo pin)
 }
 
-void loop() {
+void loop() 
+{
   network.update();
-  while ( network.available() ) {     // Is there any incoming data?
+  while ( network.available() ) 
+  {     // Is there any incoming data?
     RF24NetworkHeader header;
-    unsigned long incomingData;
-    network.read(header, &incomingData, sizeof(incomingData)); // Read the incoming data
-    myservo.write(incomingData);  // tell servo to go to a particular angle
+    int test_empfang_1;
+    network.read(header, &test_empfang_1, sizeof(test_empfang_1)); // Read the incoming data
+    printf("Test Empfang 1: ");
+    printf(test_empfang_1);
+    printf("\n");
   }
+  
 }
