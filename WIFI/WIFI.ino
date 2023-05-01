@@ -1,3 +1,6 @@
+
+//Wifi code für Arduino 1
+
 #include <RF24.h>
 #include <RF24Network.h>
 #include <SPI.h>
